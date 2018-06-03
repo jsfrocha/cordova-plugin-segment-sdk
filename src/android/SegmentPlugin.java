@@ -27,15 +27,15 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
-public class AnalyticsPlugin extends CordovaPlugin {
+public class SegmentPlugin extends CordovaPlugin {
 
-    private static final String TAG = "AnalyticsPlugin";
+    private static final String TAG = "SegmentPlugin";
     // static to avoid potential duplicates
     private static Analytics analytics;
 
     @Override protected void pluginInitialize() {
 
-        if (AnalyticsPlugin.analytics != null) {
+        if (SegmentPlugin.analytics != null) {
             // Log.d(TAG, "ANALYTICS INSTANCE ALREADY EXISTS!");
             return;
         }
@@ -43,7 +43,7 @@ public class AnalyticsPlugin extends CordovaPlugin {
         // get Analytics instance if it's not already initialised
         final String writeKey = this._getAnalyticsKey();
         final LogLevel logLevel = this._getLogLevel();
-        final AnalyticsPlugin plugin = this;
+        final SegmentPlugin plugin = this;
 
         // Log.d(TAG, "writeKey " + writeKey);
 
@@ -55,9 +55,9 @@ public class AnalyticsPlugin extends CordovaPlugin {
             }
         });
         try {
-            AnalyticsPlugin.analytics = future.get();
-            // Log.d(TAG, "AnalyticsPlugin.analytics " + AnalyticsPlugin.analytics.toString());
-            Analytics.setSingletonInstance(AnalyticsPlugin.analytics);
+            SegmentPlugin.analytics = future.get();
+            // Log.d(TAG, "SegmentPlugin.analytics " + SegmentPlugin.analytics.toString());
+            Analytics.setSingletonInstance(SegmentPlugin.analytics);
         } catch (InterruptedException e) {
             Log.e(TAG, "interrupted error");
             e.printStackTrace();
@@ -72,7 +72,7 @@ public class AnalyticsPlugin extends CordovaPlugin {
     }
 
     private String _getAnalyticsKey() {
-        String preferenceName = (BuildConfig.DEBUG) ? "analytics_debug_write_key" : "analytics_write_key";
+        String preferenceName = (BuildConfig.DEBUG) ? "android_segment_debug_write_key" : "android_segment_write_key";
         return this.preferences.getString(preferenceName, null);
     }
 
@@ -103,7 +103,7 @@ public class AnalyticsPlugin extends CordovaPlugin {
 //            return true;
 //        }
 
-        if (AnalyticsPlugin.analytics == null) {
+        if (SegmentPlugin.analytics == null) {
             Log.e(TAG, "Error initializing");
             return false;
         }

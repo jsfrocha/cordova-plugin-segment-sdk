@@ -25,8 +25,8 @@
                 <param name="android-package" value="com.segment.analytics.cordova.SegmentPlugin"/>
                 <param name="onload" value="true"/>
             </feature>
-            <preference name="analytics_write_key"/>
-            <preference name="analytics_debug_write_key"/>
+            <preference name="android_segment_write_key"/>
+            <preference name="android_segment_debug_write_key"/>
         </config-file>
 
         <config-file target="AndroidManifest.xml" parent="/manifest">
@@ -60,8 +60,8 @@
                 <param name="ios-package" value="SegmentPlugin" />
                 <param name="onload" value="true"/>
             </feature>
-            <preference name="analytics_write_key"/>
-            <preference name="analytics_debug_write_key"/>
+            <preference name="ios_segment_write_key"/>
+            <preference name="ios_segment_debug_write_key"/>
         </config-file>
 
         <header-file src="src/ios/SegmentPlugin.h" />

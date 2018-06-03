@@ -19,11 +19,11 @@
     //Get app credentials from config.xml or the info.plist if they can't be found
     #ifdef DEBUG
         [SEGAnalytics debug:YES];
-        writeKeyPreferenceName = @"analytics_debug_write_key";
+        writeKeyPreferenceName = @"ios_segment_debug_write_key";
         writeKeyPListName = @"AnalyticsDebugWriteKey";
     #else
         [SEGAnalytics debug:NO];
-        writeKeyPreferenceName = @"analytics_write_key";
+        writeKeyPreferenceName = @"ios_segment_write_key";
         writeKeyPListName = @"AnalyticsWriteKey";
     #endif
 
