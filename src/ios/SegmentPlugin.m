@@ -6,7 +6,7 @@
 
 - (void)pluginInitialize
 {
-    NSLog(@"[cordova-plugin-segment] plugin initialized");
+    NSLog(@"[cordova-plugin-segment-sdk] plugin initialized");
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(finishLaunching:) name:UIApplicationDidFinishLaunchingNotification object:nil];
 }
@@ -37,7 +37,7 @@
         configuration.trackApplicationLifecycleEvents = true;
         [SEGAnalytics setupWithConfiguration:configuration];
     } else {
-        NSLog(@"[cordova-plugin-segment] ERROR - Invalid write key");
+        NSLog(@"[cordova-plugin-segment-sdk] ERROR - Invalid write key");
     }
 }
 

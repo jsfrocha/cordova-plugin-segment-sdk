@@ -1,8 +1,8 @@
 var exec = require('cordova/exec');
 
-var analytics = {};
+var SegmentSDK = {};
 
-analytics.identify = function() {
+SegmentSDK.identify = function() {
   var args = Array.prototype.slice.call(arguments);
 
   if (typeof args[0] !== 'string') {
@@ -12,7 +12,7 @@ analytics.identify = function() {
   exec(null, null, 'SegmentPlugin', 'identify', getNArgs(args, 3));
 };
 
-analytics.group = function() {
+SegmentSDK.group = function() {
   var args = Array.prototype.slice.call(arguments);
 
   if (typeof args[0] !== 'string') {
@@ -22,7 +22,7 @@ analytics.group = function() {
   exec(null, null, 'SegmentPlugin', 'group', getNArgs(args, 3));
 };
 
-analytics.track = function() {
+SegmentSDK.track = function() {
   var args = Array.prototype.slice.call(arguments);
 
   exec(null, null, 'SegmentPlugin', 'track', getNArgs(args, 3));
@@ -30,7 +30,7 @@ analytics.track = function() {
 
 
 // alias `screen` as `page` for consistent with Analytics.js interface
-analytics.screen = analytics.page = function() {
+SegmentSDK.screen = SegmentSDK.page = function() {
   var args = Array.prototype.slice.call(arguments);
 
   if (typeof args[1] !== 'string') {
@@ -40,32 +40,32 @@ analytics.screen = analytics.page = function() {
   exec(null, null, 'SegmentPlugin', 'screen', getNArgs(args, 4));
 };
 
-analytics.alias = function() {
+SegmentSDK.alias = function() {
   var args = Array.prototype.slice.call(arguments);
 
   exec(null, null, 'SegmentPlugin', 'alias', getNArgs(args, 2));
 };
 
-analytics.reset = function() {
+SegmentSDK.reset = function() {
   exec(null, null, 'SegmentPlugin', 'reset', []);
 };
 
-analytics.flush = function() {
+SegmentSDK.flush = function() {
   exec(null, null, 'SegmentPlugin', 'flush', []);
 };
 
 // iOS only
-analytics.enable = function() {
+SegmentSDK.enable = function() {
   exec(null, null, 'SegmentPlugin', 'enable', []);
 };
 
 // iOS only
-analytics.disable = function() {
+SegmentSDK.disable = function() {
   exec(null, null, 'SegmentPlugin', 'disable', []);
 };
 
 // android only
-analytics.getSnapshot = function(callbackFn) {
+SegmentSDK.getSnapshot = function(callbackFn) {
   exec(function(result) {
     callbackFn(result);
   }, null, 'SegmentPlugin', 'getSnapshot', []);
@@ -82,4 +82,4 @@ function getNArgs(args, n) {
   return result;
 }
 
-module.exports = analytics;
+module.exports = SegmentSDK;

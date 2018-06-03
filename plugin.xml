@@ -15,8 +15,8 @@
         <engine name="cordova-ios" version=">=3.0.0" />
     </engines>
 
-    <js-module name="analytics" src="www/analytics.js">
-        <clobbers target="cordova.plugins.analytics" />
+    <js-module name="SegmentSDK" src="www/SegmentSDK.js">
+        <clobbers target="cordova.plugins.SegmentSDK" />
     </js-module>
 
     <platform name="android">
