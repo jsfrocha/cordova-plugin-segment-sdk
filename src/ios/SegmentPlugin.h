@@ -2,7 +2,7 @@
 #import <Cordova/CDV.h>
 #import <Cordova/CDVPlugin.h>
 
-@interface AnalyticsPlugin : CDVPlugin
+@interface SegmentPlugin : CDVPlugin
 
 - (void)identify:(CDVInvokedUrlCommand*)command;
 - (void)group:(CDVInvokedUrlCommand*)command;

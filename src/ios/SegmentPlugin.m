@@ -1,8 +1,8 @@
-#import "AnalyticsPlugin.h"
+#import "SegmentPlugin.h"
 #import <Cordova/CDV.h>
 #import <Analytics/SEGAnalytics.h>
 
-@implementation AnalyticsPlugin : CDVPlugin
+@implementation SegmentPlugin : CDVPlugin
 
 - (void)pluginInitialize
 {
