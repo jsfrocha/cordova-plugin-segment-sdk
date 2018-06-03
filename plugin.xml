@@ -21,8 +21,8 @@
 
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
-            <feature name="AnalyticsPlugin">
-                <param name="android-package" value="com.segment.analytics.cordova.AnalyticsPlugin"/>
+            <feature name="SegmentPlugin">
+                <param name="android-package" value="com.segment.analytics.cordova.SegmentPlugin"/>
                 <param name="onload" value="true"/>
             </feature>
             <preference name="analytics_write_key"/>
@@ -51,21 +51,21 @@
 
         <framework src="com.segment.analytics.android:analytics:4+"/>
 
-        <source-file src="src/android/AnalyticsPlugin.java" target-dir="src/com/segment/analytics/cordova"/>
+        <source-file src="src/android/SegmentPlugin.java" target-dir="src/com/segment/analytics/cordova"/>
     </platform>
 
     <platform name="ios">
         <config-file target="config.xml" parent="/*">
-            <feature name="AnalyticsPlugin">
-                <param name="ios-package" value="AnalyticsPlugin" />
+            <feature name="SegmentPlugin">
+                <param name="ios-package" value="SegmentPlugin" />
                 <param name="onload" value="true"/>
             </feature>
             <preference name="analytics_write_key"/>
             <preference name="analytics_debug_write_key"/>
         </config-file>
 
-        <header-file src="src/ios/AnalyticsPlugin.h" />
-        <source-file src="src/ios/AnalyticsPlugin.m" />
+        <header-file src="src/ios/SegmentPlugin.h" />
+        <source-file src="src/ios/SegmentPlugin.m" />
 
         <framework src="Analytics" type="podspec" spec="3.5.5" />
 
