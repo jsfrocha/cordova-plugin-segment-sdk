@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.segment.analytics.Analytics;
 import com.segment.analytics.Analytics.LogLevel;
+import com.segment.analytics.AnalyticsContext;
+import com.segment.analytics.AnalyticsContext.Campaign;
 import com.segment.analytics.Properties;
 import com.segment.analytics.Properties.Product;
 import com.segment.analytics.StatsSnapshot;
@@ -143,9 +145,9 @@ public class SegmentPlugin extends CordovaPlugin {
             public void run() {
 
                 JSONObject contextObj = args.optJSONObject(2);
-                if (contextObj != null) {
-                    analytics.analyticsContext = enrichAnalyticsContext(analytics.analyticsContext, contextObj);
-                }
+
+                AnalyticsContext analyticsContext = analytics.getAnalyticsContext()
+                analyticsContext = enrichAnalyticsContext(analyticsContext, contextObj);
 
                 analytics.with(cordova.getActivity().getApplicationContext()).identify(
                         optArgString(args, 0),
