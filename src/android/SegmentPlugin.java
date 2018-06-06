@@ -278,14 +278,14 @@ public class SegmentPlugin extends CordovaPlugin {
         Campaign campaign = new Campaign();
 
         if (contextMap != null) {
-            Map<String, Object> campaignMap = contextMap.get("campaign");
+            Map<String, Object> campaignMap = mapFromJSON(contextMap.get("campaign"));
 
             if (campaignMap != null) {
-                String cmpName = campaignMap.get("name");
-                String cmpSource = campaignMap.get("source");
-                String cmpMedium = campaignMap.get("medium");
-                String cmpContent = campaignMap.get("content");
-                String cmpTerm = campaignMap.get("term");
+                String cmpName = (String) campaignMap.get("name");
+                String cmpSource = (String) campaignMap.get("source");
+                String cmpMedium = (String) campaignMap.get("medium");
+                String cmpContent = (String) campaignMap.get("content");
+                String cmpTerm = (String) campaignMap.get("term");
 
                 if (cmpName != null) {
                     campaign.putName(cmpName);
