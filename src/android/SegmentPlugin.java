@@ -146,7 +146,7 @@ public class SegmentPlugin extends CordovaPlugin {
 
                 JSONObject contextObj = args.optJSONObject(2);
 
-                AnalyticsContext analyticsContext = analytics.getAnalyticsContext()
+                AnalyticsContext analyticsContext = analytics.getAnalyticsContext();
                 analyticsContext = enrichAnalyticsContext(analyticsContext, contextObj);
 
                 analytics.with(cordova.getActivity().getApplicationContext()).identify(
