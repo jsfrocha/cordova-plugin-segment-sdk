@@ -141,10 +141,16 @@ public class SegmentPlugin extends CordovaPlugin {
         cordova.getThreadPool().execute(new Runnable() {
             @Override
             public void run() {
+
+                JSONObject contextObj = args.optJSONObject(2);
+                if (contextObj != null) {
+                    analytics.analyticsContext = enrichAnalyticsContext(analytics.analyticsContext, contextObj);
+                }
+
                 analytics.with(cordova.getActivity().getApplicationContext()).identify(
                         optArgString(args, 0),
                         makeTraitsFromJSON(args.optJSONObject(1)),
-                        makePropertiesFromJSON(args.optJSONObject(2)) // passing options is deprecated
+                        null // passing options is deprecated
                 );
             }
         });
@@ -162,7 +168,7 @@ public class SegmentPlugin extends CordovaPlugin {
         analytics.with(cordova.getActivity().getApplicationContext()).track(
                 optArgString(args, 0),
                 makePropertiesFromJSON(args.optJSONObject(1)),
-                makePropertiesFromJSON(args.optJSONObject(2)) // passing options is deprecated
+                null // passing options is deprecated
         );
     }
 
@@ -171,7 +177,7 @@ public class SegmentPlugin extends CordovaPlugin {
                 optArgString(args, 0),
                 optArgString(args, 1),
                 makePropertiesFromJSON(args.optJSONObject(2)),
-                makePropertiesFromJSON(args.optJSONObject(3)) // passing options is deprecated
+                null // passing options is deprecated
         );
     }
 
@@ -255,6 +261,53 @@ public class SegmentPlugin extends CordovaPlugin {
         }
 
         return properties;
+    }
+
+    private AnalyticsContext enrichAnalyticsContext(AnalyticsContext analyticsContext, JSONObject json) {
+        Campaign campaign = makeCampaignFromJSON(campaignMap);
+
+        analyticsContext.putCampaign(campaign);
+
+        return analyticsContext;
+    }
+
+    private Campaign makeCampaignFromJSON(JSONObject json) {
+        Map<String, Object> contextMap = mapFromJSON(json);
+        Campaign campaign = new Campaign();
+
+        if (contextMap != null) {
+            Map<String, Object> campaignMap = contextMap.get("campaign");
+
+            if (campaignMap != null) {
+                String cmpName = campaignMap.get("name");
+                String cmpSource = campaignMap.get("source");
+                String cmpMedium = campaignMap.get("medium");
+                String cmpContent = campaignMap.get("content");
+                String cmpTerm = campaignMap.get("term");
+
+                if (cmpName != null) {
+                    campaign.putName(cmpName);
+                }
+
+                if (cmpSource != null) {
+                    campaign.putSource(cmpSource);
+                }
+
+                if (cmpMedium != null) {
+                    campaign.putMedium(cmpMedium);
+                }
+
+                if (cmpContent != null) {
+                    campaign.putContent(cmpContent);
+                }
+
+                if (cmpTerm != null) {
+                    campaign.putTerm(cmpTerm);
+                }
+            }
+        }
+
+        return campaign;
     }
 
     private static Map<String, Object> mapFromJSON(JSONObject jsonObject) {
