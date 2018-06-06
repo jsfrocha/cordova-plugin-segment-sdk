@@ -266,7 +266,7 @@ public class SegmentPlugin extends CordovaPlugin {
     }
 
     private AnalyticsContext enrichAnalyticsContext(AnalyticsContext analyticsContext, JSONObject json) {
-        Campaign campaign = makeCampaignFromJSON(campaignMap);
+        Campaign campaign = makeCampaignFromJSON(json);
 
         analyticsContext.putCampaign(campaign);
 
