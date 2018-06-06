@@ -38,7 +38,7 @@ public class SegmentPlugin extends CordovaPlugin {
     @Override protected void pluginInitialize() {
 
         if (SegmentPlugin.analytics != null) {
-            // Log.d(TAG, "ANALYTICS INSTANCE ALREADY EXISTS!");
+            Log.d(TAG, "ANALYTICS INSTANCE ALREADY EXISTS!");
             return;
         }
 
@@ -46,8 +46,6 @@ public class SegmentPlugin extends CordovaPlugin {
         final String writeKey = this._getAnalyticsKey();
         final LogLevel logLevel = this._getLogLevel();
         final SegmentPlugin plugin = this;
-
-        // Log.d(TAG, "writeKey " + writeKey);
 
         // using a thread pool so as not to block the main thread
         Future<Analytics> future = cordova.getThreadPool().submit(new Callable<Analytics>() {
@@ -58,7 +56,7 @@ public class SegmentPlugin extends CordovaPlugin {
         });
         try {
             SegmentPlugin.analytics = future.get();
-            // Log.d(TAG, "SegmentPlugin.analytics " + SegmentPlugin.analytics.toString());
+            Log.d(TAG, "SegmentPlugin.analytics " + SegmentPlugin.analytics.toString());
             Analytics.setSingletonInstance(SegmentPlugin.analytics);
         } catch (InterruptedException e) {
             Log.e(TAG, "interrupted error");
@@ -75,7 +73,8 @@ public class SegmentPlugin extends CordovaPlugin {
 
     private String _getAnalyticsKey() {
         String preferenceName = (BuildConfig.DEBUG) ? "android_segment_debug_write_key" : "android_segment_write_key";
-        return this.preferences.getString(preferenceName, null);
+        return "KVTJPG0Itnmt0CEhDxmT0sNerWVhWouE";
+        //return this.preferences.getString(preferenceName, null);
     }
 
     // pure function used by concurrent thread
@@ -86,12 +85,12 @@ public class SegmentPlugin extends CordovaPlugin {
             Log.e(TAG, "Invalid write key: " + writeKey);
         } else {
             a = new Analytics.Builder(
-                cordova.getActivity().getApplicationContext(),
-                writeKey
+                    cordova.getActivity().getApplicationContext(),
+                    writeKey
             )
-            .logLevel(logLevel)
-            .trackApplicationLifecycleEvents()
-            .build();
+                    .logLevel(logLevel)
+                    .trackApplicationLifecycleEvents()
+                    .build();
 
         }
         return a;
@@ -149,6 +148,8 @@ public class SegmentPlugin extends CordovaPlugin {
                 AnalyticsContext analyticsContext = analytics.getAnalyticsContext();
                 analyticsContext = enrichAnalyticsContext(analyticsContext, contextObj);
 
+                Log.d(TAG, "Segment - Identify - ContextObj: " + contextObj.toString());
+
                 analytics.with(cordova.getActivity().getApplicationContext()).identify(
                         optArgString(args, 0),
                         makeTraitsFromJSON(args.optJSONObject(1)),
@@ -167,6 +168,14 @@ public class SegmentPlugin extends CordovaPlugin {
     }
 
     private void track(JSONArray args) {
+
+        JSONObject contextObj = args.optJSONObject(2);
+
+        AnalyticsContext analyticsContext = analytics.getAnalyticsContext();
+        analyticsContext = enrichAnalyticsContext(analyticsContext, contextObj);
+
+        Log.d(TAG, "Segment - Track - ContextObj: " + contextObj.toString());
+
         analytics.with(cordova.getActivity().getApplicationContext()).track(
                 optArgString(args, 0),
                 makePropertiesFromJSON(args.optJSONObject(1)),
@@ -175,6 +184,14 @@ public class SegmentPlugin extends CordovaPlugin {
     }
 
     private void screen(JSONArray args) {
+
+        JSONObject contextObj = args.optJSONObject(3);
+
+        AnalyticsContext analyticsContext = analytics.getAnalyticsContext();
+        analyticsContext = enrichAnalyticsContext(analyticsContext, contextObj);
+
+        Log.d(TAG, "Segment - Screen - ContextObj: " + contextObj.toString());
+
         analytics.with(cordova.getActivity().getApplicationContext()).screen(
                 optArgString(args, 0),
                 optArgString(args, 1),
@@ -247,9 +264,9 @@ public class SegmentPlugin extends CordovaPlugin {
 
                 for (Map<String, Object> rawProduct : rawProducts) {
                     Product product = new Product(
-                        rawProduct.get("id") == null ? "" : (String) rawProduct.get("id"),
-                        rawProduct.get("sku") == null ? "" : (String) rawProduct.get("sku"),
-                        rawProduct.get("price") == null ? 0d : Double.valueOf(rawProduct.get("price").toString())
+                            rawProduct.get("id") == null ? "" : (String) rawProduct.get("id"),
+                            rawProduct.get("sku") == null ? "" : (String) rawProduct.get("sku"),
+                            rawProduct.get("price") == null ? 0d : Double.valueOf(rawProduct.get("price").toString())
                     );
 
                     product.putAll(rawProduct);
@@ -274,11 +291,12 @@ public class SegmentPlugin extends CordovaPlugin {
     }
 
     private Campaign makeCampaignFromJSON(JSONObject json) {
-        Map<String, Object> contextMap = mapFromJSON(json);
+        Map<String, Object> objMap = mapFromJSON(json);
         Campaign campaign = new Campaign();
 
-        if (contextMap != null) {
-            Map<String, Object> campaignMap = mapFromJSON((JSONObject) contextMap.get("campaign"));
+        if (objMap != null) {
+            Map<String, Object> contextMap = (Map<String, Object>) objMap.get("context");
+            Map<String, Object> campaignMap = (Map<String, Object>) contextMap.get("campaign");
 
             if (campaignMap != null) {
                 String cmpName = (String) campaignMap.get("name");
