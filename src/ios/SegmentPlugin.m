@@ -45,12 +45,13 @@
 {
     NSString* userId = [command.arguments objectAtIndex:0];
     NSDictionary* traits = [command.arguments objectAtIndex:1];
+    NSDictionary* options = [command.arguments objectAtIndex:2];
 
     if (traits == (id)[NSNull null]) {
         traits = nil;
     }
 
-    [[SEGAnalytics sharedAnalytics] identify:userId traits:traits];
+    [[SEGAnalytics sharedAnalytics] identify:userId traits:traits options:options];
 }
 
 - (void)group:(CDVInvokedUrlCommand*)command
@@ -69,12 +70,13 @@
 {
     NSString* event = [command.arguments objectAtIndex:0];
     NSDictionary* properties = [command.arguments objectAtIndex:1];
+    NSDictionary* options = [command.arguments objectAtIndex:2];
 
     if (properties == (id)[NSNull null]) {
         properties = nil;
     }
 
-    [[SEGAnalytics sharedAnalytics] track:event properties:properties];
+    [[SEGAnalytics sharedAnalytics] track:event properties:properties options:options];
 }
 
 - (void)screen:(CDVInvokedUrlCommand*)command
@@ -82,6 +84,7 @@
     NSString* category = [command.arguments objectAtIndex:0];
     NSString* name = [command.arguments objectAtIndex:1];
     NSDictionary* properties = [command.arguments objectAtIndex:2];
+    NSDictionary* options = [command.arguments objectAtIndex:3];
 
     if (properties == (id)[NSNull null]) {
         properties = [NSMutableDictionary dictionary];
@@ -91,7 +94,7 @@
         [properties setValue:category forKey:@"category"];
     }
 
-    [[SEGAnalytics sharedAnalytics] screen:name properties:properties];
+    [[SEGAnalytics sharedAnalytics] screen:name properties:properties options:options];
 }
 
 - (void)alias:(CDVInvokedUrlCommand*)command

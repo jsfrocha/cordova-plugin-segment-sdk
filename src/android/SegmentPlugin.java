@@ -144,7 +144,7 @@ public class SegmentPlugin extends CordovaPlugin {
                 analytics.with(cordova.getActivity().getApplicationContext()).identify(
                         optArgString(args, 0),
                         makeTraitsFromJSON(args.optJSONObject(1)),
-                        null // passing options is deprecated
+                        makePropertiesFromJSON(args.optJSONObject(2)) // passing options is deprecated
                 );
             }
         });
@@ -162,7 +162,7 @@ public class SegmentPlugin extends CordovaPlugin {
         analytics.with(cordova.getActivity().getApplicationContext()).track(
                 optArgString(args, 0),
                 makePropertiesFromJSON(args.optJSONObject(1)),
-                null // passing options is deprecated
+                makePropertiesFromJSON(args.optJSONObject(2)) // passing options is deprecated
         );
     }
 
@@ -171,7 +171,7 @@ public class SegmentPlugin extends CordovaPlugin {
                 optArgString(args, 0),
                 optArgString(args, 1),
                 makePropertiesFromJSON(args.optJSONObject(2)),
-                null // passing options is deprecated
+                makePropertiesFromJSON(args.optJSONObject(3)) // passing options is deprecated
         );
     }
 
