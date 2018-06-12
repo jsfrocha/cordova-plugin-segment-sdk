@@ -73,8 +73,7 @@ public class SegmentPlugin extends CordovaPlugin {
 
     private String _getAnalyticsKey() {
         String preferenceName = (BuildConfig.DEBUG) ? "android_segment_debug_write_key" : "android_segment_write_key";
-        return "KVTJPG0Itnmt0CEhDxmT0sNerWVhWouE";
-        //return this.preferences.getString(preferenceName, null);
+        return this.preferences.getString(preferenceName, null);
     }
 
     // pure function used by concurrent thread
